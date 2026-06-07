@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="12dp"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="3dp"
+    android:alpha="0.98">
+
+    <!-- ================= TOP SECTION: NAME + PRICE ================= -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <!-- Left: Medicine Info -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <!-- Medicine Name -->
+            <TextView
+                android:id="@+id/txtName"
+                android:text="Paracetamol"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#2C3E50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Brand Info -->
+            <TextView
+                android:id="@+id/txtBrand"
+                android:text="Brand: N/A"
+                android:textSize="12sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Per Unit Price -->
+            <TextView
+                android:id="@+id/txtPrice"
+                android:text="₹50 per unit"
+                android:textSize="13sp"
+                android:textColor="#5B8DBE"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Right: Total Amount -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textSize="11sp"
+                android:textColor="#95A5A6"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtItemTotal"
+                android:text="₹500"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#27AE60"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ================= MFG & EXPIRY ROW ================= -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MFG"
+                android:textSize="9sp"
+                android:textColor="#95A5A6"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"/>
+
+            <TextView
+                android:id="@+id/txtMfg"
+                android:text="N/A"
+                android:textSize="12sp"
+                android:textColor="#2C3E50"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="28dp"
+            android:background="#E8E3DD"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EXP"
+                android:textSize="9sp"
+                android:textColor="#95A5A6"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"/>
+
+            <TextView
+                android:id="@+id/txtExpiry"
+                android:text="N/A"
+                android:textSize="12sp"
+                android:textColor="#E74C3C"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="28dp"
+            android:background="#E8E3DD"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STOCK"
+                android:textSize="9sp"
+                android:textColor="#95A5A6"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"/>
+
+            <TextView
+                android:id="@+id/txtStock"
+                android:text="Available"
+                android:textSize="12sp"
+                android:textColor="#16A34A"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ================= DIVIDER ================= -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E3DD"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- ================= QUANTITY + REMOVE ================= -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Quantity Control -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <Button
+                android:id="@+id/btnMinus"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:fontFamily="sans-serif-light"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:backgroundTint="#CBD5E1" />
+
+            <TextView
+                android:id="@+id/txtQty"
+                android:text="1"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btnPlus"
+                android:text="+"
+                android:textSize="30dp"
+                app:backgroundTint="#3B82F6"
+                android:textColor="@color/black"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- Remove Button -->
+        <Button
+            android:id="@+id/btnRemove"
+            android:text="Remove"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#EF4444"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"/>
+    </LinearLayout>
+
+</LinearLayout>

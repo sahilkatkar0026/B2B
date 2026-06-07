@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="12dp">
+
+    <!-- Medicine Name -->
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Medicine Name"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:contentDescription="Medicine name"/>
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹0"
+        android:textSize="14sp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="Medicine price"/>
+
+    <!-- Minus Button -->
+    <ImageButton
+        android:id="@+id/btnMinus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@android:drawable/ic_media_previous"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Decrease quantity"
+        android:padding="12dp"/>
+
+    <!-- Quantity -->
+    <EditText
+        android:id="@+id/etQty"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
+        android:inputType="number"
+        android:gravity="center"
+        android:text="1"
+        android:hint="Qty"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Ordered quantity"/>
+
+    <!-- Plus Button -->
+    <ImageButton
+        android:id="@+id/btnPlus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@android:drawable/ic_media_next"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Increase quantity"
+        android:padding="12dp"/>
+
+</LinearLayout>

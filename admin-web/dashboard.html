@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical B2B Admin | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Chart.js for analytics graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  </head>
+  <body class="dashboard-body">
+    <div class="layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-logo">MB</div>
+          <div class="brand-text">
+            <span class="brand-title">Medical B2B</span>
+            <span class="brand-subtitle">Admin Panel</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button
+            class="sidebar-link active"
+            data-section="section-dashboard"
+            type="button"
+          >
+            📊 Dashboard
+          </button>
+          <button class="sidebar-link" data-section="section-profile" type="button">
+            👤 My Profile
+          </button>
+          <button class="sidebar-link" data-section="section-analytics" type="button">
+            📈 Sales Analytics
+          </button>
+          <button
+            class="sidebar-link"
+            data-section="section-suppliers"
+            type="button"
+          >
+            🏭 Supplier Verification
+          </button>
+          <button class="sidebar-link" data-section="section-shopkeepers" type="button">
+            🛒 Shopkeeper Verification
+          </button>
+          <button class="sidebar-link" data-section="section-medicines" type="button">💊 Medicine Approval</button>
+          <button class="sidebar-link" data-section="section-fraud" type="button">⚠️ Fraud Monitoring</button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main">
+        <!-- Top Bar -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <h1 class="topbar-title">Admin Dashboard</h1>
+            <p class="topbar-subtitle">
+              Monitor suppliers, shopkeepers, and medicines in real time.
+            </p>
+          </div>
+          <div class="topbar-right">
+            <div class="user-info">
+              <span id="adminName" class="user-name">Loading...</span>
+              <span id="adminEmail" class="user-email"></span>
+            </div>
+            <button id="logoutBtn" class="btn btn-ghost" type="button">
+              Logout
+            </button>
+          </div>
+        </header>
+
+        <!-- Dashboard Overview Section -->
+        <section
+          id="section-dashboard"
+          class="section section-active"
+          aria-label="Dashboard overview"
+        >
+          <div class="card-grid">
+            <article class="card">
+              <h2 class="card-title">Total Suppliers</h2>
+              <p id="statTotalSuppliers" class="card-stat">0</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Approved Suppliers</h2>
+              <p id="statApprovedSuppliers" class="card-stat">0</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Pending Medicines</h2>
+              <p id="statPendingMedicines" class="card-stat">0</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Total Medicines</h2>
+              <p id="statTotalMedicines" class="card-stat">0</p>
+            </article>
+            <article class="card card-danger">
+              <h2 class="card-title">Expired Medicines</h2>
+              <p id="statExpiredMedicines" class="card-stat">0</p>
+            </article>
+            <article class="card card-warning">
+              <h2 class="card-title">Low Stock (≤5)</h2>
+              <p id="statLowStockMedicines" class="card-stat">0</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Admin Profile Section -->
+        <section
+          id="section-profile"
+          class="section"
+          aria-label="Admin profile management"
+        >
+          <div class="section-header">
+            <h2>👤 My Profile</h2>
+            <p>Manage your account information and security settings.</p>
+          </div>
+
+          <!-- Profile Card -->
+          <div class="profile-container">
+            <div class="profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar">
+                  <span id="profileInitial">A</span>
+                </div>
+                <div class="profile-info">
+                  <h3 id="profileName">Admin User</h3>
+                  <p id="profileEmail">admin@example.com</p>
+                  <span class="profile-role">Administrator</span>
+                </div>
+              </div>
+
+              <!-- Profile Details -->
+              <div class="profile-section">
+                <h4>Account Information</h4>
+                <div class="profile-row">
+                  <div class="profile-field">
+                    <label>Full Name</label>
+                    <input type="text" id="fullNameInput" placeholder="Your full name" />
+                  </div>
+                  <div class="profile-field">
+                    <label>Email Address</label>
+                    <input type="email" id="emailInput" placeholder="Email" disabled />
+                  </div>
+                </div>
+                <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+              </div>
+
+              <!-- Security Section -->
+              <div class="profile-section security-section">
+                <h4>Security Settings</h4>
+                <div class="security-box">
+                  <div class="security-info">
+                    <h5>Change Password</h5>
+                    <p>Update your password regularly to keep your account secure.</p>
+                  </div>
+                  <button class="btn btn-primary" id="changePasswordBtn" type="button">Change Password</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Change Password Modal -->
+          <div id="passwordModal" class="modal hidden">
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="modal-close" id="modalCloseBtn" type="button">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="currentPassword">Current Password</label>
+                  <input
+                    type="password"
+                    id="currentPassword"
+                    class="input"
+                    placeholder="Enter current password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input
+                    type="password"
+                    id="newPassword"
+                    class="input"
+                    placeholder="Enter new password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    class="input"
+                    placeholder="Confirm new password"
+                    required
+                  />
+                </div>
+                <p id="passwordError" class="form-error"></p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-ghost" id="modalCancelBtn" type="button">Cancel</button>
+                <button class="btn btn-primary" id="submitPasswordBtn" type="button">Update Password</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sales Analytics Section -->
+        <section
+          id="section-analytics"
+          class="section"
+          aria-label="Sales analytics and reports"
+        >
+          <div class="section-header">
+            <h2>📈 Sales Analytics</h2>
+            <p>View comprehensive sales data, trends, and key performance metrics.</p>
+          </div>
+
+          <!-- Analytics KPI Cards -->
+          <div class="card-grid">
+            <article class="card">
+              <h2 class="card-title">Total Orders</h2>
+              <p id="statTotalOrders" class="card-stat">0</p>
+              <p class="card-subtitle" id="statOrdersTrend">↑ 0% from last week</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Total Sales</h2>
+              <p id="statTotalSales" class="card-stat">₹0</p>
+              <p class="card-subtitle" id="statSalesTrend">↑ 0% from last week</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Avg Order Value</h2>
+              <p id="statAvgorderValue" class="card-stat">₹0</p>
+              <p class="card-subtitle">Per order</p>
+            </article>
+            <article class="card">
+              <h2 class="card-title">Orders This Week</h2>
+              <p id="statWeeklyOrders" class="card-stat">0</p>
+              <p class="card-subtitle">Last 7 days</p>
+            </article>
+          </div>
+
+          <!-- Charts Row 1 -->
+          <div class="charts-grid">
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Sales Over Time (Last 30 Days)</h3>
+              </div>
+              <canvas id="salesLineChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Sales by Category</h3>
+              </div>
+              <canvas id="salesPieChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Charts Row 2 -->
+          <div class="charts-grid">
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Top 10 Products</h3>
+              </div>
+              <canvas id="topProductsChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Orders by Status</h3>
+              </div>
+              <canvas id="orderStatusChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Detailed Sales Table -->
+          <div class="section-header" style="margin-top: 2rem;">
+            <h3>Recent Orders</h3>
+            <p>Last 20 orders across all shops</p>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Shop/Supplier</th>
+                  <th>Total Amount</th>
+                  <th>Items Count</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersBody">
+                <!-- Populated by analytics.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Supplier Approvals Section -->
+        <section
+          id="section-suppliers"
+          class="section"
+          aria-label="Pending supplier approvals"
+        >
+          <div class="section-header">
+            <h2>Pending Supplier Approvals</h2>
+            <p>Verify licenses and approve or reject supplier accounts.</p>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>License Image</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="supplierApprovalsBody">
+                <!-- Rows populated by approvals.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Shopkeeper Approvals Section -->
+        <section
+          id="section-shopkeepers"
+          class="section"
+          aria-label="Pending shopkeeper approvals"
+        >
+          <div class="section-header">
+            <h2>Pending Shopkeeper Approvals</h2>
+            <p>Verify licenses and approve or reject shopkeeper accounts.</p>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Shop Name</th>
+                  <th>License Image</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="shopkeeperApprovalsBody">
+                <!-- Rows populated by approvals.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Medicines Section -->
+        <section
+          id="section-medicines"
+          class="section"
+          aria-label="Medicine monitoring"
+        >
+          <div class="section-header">
+            <h2>Medicine Monitoring</h2>
+            <p>
+              Track all medicines from suppliers, verify expiry, and manage
+              approvals.
+            </p>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Medicine</th>
+                  <th>Brand</th>
+                  <th>Supplier</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>MFG Date</th>
+                  <th>Expiry Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="medicinesTableBody">
+                <!-- Rows populated by medicines.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Fraud Monitoring -->
+        <section id="section-fraud" class="section" aria-label="Fraud monitoring">
+          <div class="section-header">
+            <h2>Fraud Monitoring</h2>
+            <p>High reorder frequency: same medicine &gt; 5 reorders within 7 days.</p>
+          </div>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Medicine ID</th>
+                  <th>Supplier ID</th>
+                  <th>Reorders (7d)</th>
+                  <th>Flag</th>
+                </tr>
+              </thead>
+              <tbody id="fraudTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+  </body>
+</html>
+

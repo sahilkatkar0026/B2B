@@ -1,0 +1,201 @@
+Medical B2B Admin Panel - Manual Startup Instructions
+
+1) Environment & prerequisites (one-time)
+- Node.js (runtime for backend): required to run `server.js` and install npm packages.
+  Install LTS from https://nodejs.org and verify:
+
+```bash
+node --version
+npm --version
+```
+
+- Firebase CLI (optional, for deploying rules/functions/hosting):
+
+```bash
+npm install -g firebase-tools
+```
+
+- Pandoc (optional, for converting markdown to PDF):
+
+```powershell
+choco install pandoc
+```
+
+2) Open project folder
+
+```powershell
+cd d:\B2BAdmin
+```
+
+3) Install project dependencies
+
+Why: installs server and function packages (Express, Nodemailer, Firebase SDK, etc.).
+
+```powershell
+npm install
+cd functions
+npm install
+cd ..
+```
+
+4) Create environment file
+
+Why: `server.js` reads sensitive config from `.env` (email provider, port). Do NOT commit this file.
+
+Create `.env` at `d:\B2BAdmin\.env` with appropriate values. Example (Gmail):
+
+```ini
+PORT=3000
+EMAIL_PROVIDER=gmail
+GMAIL_USER=your-email@gmail.com
+GMAIL_PASSWORD=your-app-password
+```
+
+Or for mock email (dev):
+
+```ini
+PORT=3000
+EMAIL_PROVIDER=mock
+```
+
+5) (Optional) Firebase setup & rules deployment
+
+Why: deploys Realtime Database rules, cloud functions, and hosting. Only required if you want production Firebase services.
+
+```powershell
+firebase login
+firebase use --add
+```
+
+Deploy only database rules (if you edited `database.rules.json`):
+
+```powershell
+firebase deploy --only database:rules
+```
+
+To deploy everything (rules, functions, hosting):
+
+```powershell
+firebase deploy
+```
+
+6) Start backend server (Terminal 1)
+
+Why: `server.js` runs a small Express service used for sending emails and simple backend endpoints.
+
+Open a terminal and run:
+
+```powershell
+cd d:\B2BAdmin
+node server.js
+```
+
+Expected: server logs show "Server running on http://localhost:3000"
+
+7) Start frontend static server (Terminal 2)
+
+Why: serves the static UI files so you can open pages in a browser. Use a lightweight static server.
+
+```powershell
+cd d:\B2BAdmin
+npx http-server . -p 8080
+```
+
+Alternative (if `http-server` is not present):
+
+```powershell
+npx serve -p 8080
+```
+
+Expected: server serves at http://localhost:8080
+
+8) Open UI in browser (manual)
+
+Pages to open and what they do:
+- `http://localhost:8080/login.html` — Login page for all users
+- `http://localhost:8080/dashboard.html` — Admin dashboard (approve users, medicines, analytics)
+- `http://localhost:8080/register.html` — Registration form for suppliers and shopkeepers
+
+9) Quick manual tests
+
+Health checks (verify servers respond):
+
+```powershell
+curl http://localhost:3000
+curl http://localhost:8080
+```
+
+Register a supplier/shopkeeper (end-to-end test):
+- Open `http://localhost:8080/register.html` and submit the registration form.
+- Upload a license image (JPG/PNG). This verifies file upload & storage.
+
+Approve user (admin flow):
+- Go to `http://localhost:8080/dashboard.html` and login as an admin.
+- Navigate to Supplier/Shopkeeper verification, preview the license, and click Approve.
+- This verifies database updates and optional email notification.
+
+Approve medicine (inventory flow):
+- In Dashboard → Medicines, approve a pending medicine. This tests the medicine approval workflow and database writes.
+
+If email is enabled, verify the approval/rejection email arrives in the user's inbox.
+
+10) Change ports (if needed)
+
+To run backend on a different port (Windows PowerShell):
+
+```powershell
+$env:PORT = 3001
+node server.js
+```
+
+To run frontend on a different port:
+
+```powershell
+npx http-server . -p 8081
+```
+
+11) Stop servers
+
+Press `CTRL+C` in each terminal window to stop the servers.
+
+12) Troubleshooting quick commands
+
+Check which process is listening on a port:
+
+```powershell
+netstat -ano | findstr :3000
+netstat -ano | findstr :8080
+```
+
+Kill a stuck process by PID:
+
+```powershell
+taskkill /PID <PID> /F
+```
+
+Reinstall `node_modules` if dependencies are corrupted:
+
+```powershell
+rmdir /s /q node_modules
+npm install
+```
+
+13) Optional: Convert the setup guide to PDF (local)
+
+If you installed `pandoc`, convert the markdown guide to PDF:
+
+```powershell
+cd d:\B2BAdmin
+pandoc SETUP_GUIDE.md -o SETUP_GUIDE.pdf
+```
+
+14) Checklist to share with teammates
+
+- Ensure they have Node.js installed
+- Share the `.env` template (do NOT share real credentials in chat)
+- Provide Firebase project id and grant access or provide a service account
+- Share this `setup.txt` so teammates can run the exact commands
+
+--
+
+Created for sharing and manual execution. File: `d:\B2BAdmin\setup.txt`

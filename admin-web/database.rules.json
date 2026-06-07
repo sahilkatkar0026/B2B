@@ -1,0 +1,310 @@
+{
+  "rules": {
+    /* ================= ROOT ================= */
+    ".read": false,
+    ".write": false,
+
+    /* ================= USERS ================= */
+    "users": {
+      ".indexOn": ["role", "registrationStatus"],
+      ".read": "auth != null",
+
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid",
+
+        "registrationStatus": {
+          ".write": "auth != null"
+        }
+      }
+    },
+
+    /* ================= SHOPS ================= */
+    "shops": {
+      ".read": "auth != null",
+      ".write": false,
+      ".indexOn": ["createdAt"],
+
+      "$shopId": {
+        ".read": "auth != null",
+        ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+        "medicines": {
+          ".read": "auth != null",
+          ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+          "$medicineId": {
+            ".read": "auth != null",
+            ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+            "stock": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "price": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "expiryDate": {
+              ".validate": "newData.isNumber()"
+            },
+            "mfgDate": {
+              ".validate": "newData.isNumber()"
+            }
+          }
+        },
+
+        "purchasedOrders": {
+          ".read": "auth != null",
+          ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+          "$orderId": {
+            ".read": "auth != null",
+            ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')"
+          }
+        },
+
+        "reorders": {
+          ".read": "auth != null",
+          ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+          "$medicineKey": {
+            ".read": "auth != null",
+            ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+            "autoReorderEnabled": {
+              ".validate": "newData.isBoolean()"
+            },
+            "minStockLevel": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "maxStockLevel": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            }
+          }
+        },
+
+        "lastStockUpdate": {
+          ".read": "auth != null",
+          ".write": "auth != null && (auth.uid === $shopId || root.child('users').child(auth.uid).child('role').val() === 'admin')"
+        }
+      }
+    },
+
+    /* ================= SUPPLIERS ================= */
+    "suppliers": {
+      ".indexOn": ["isActive"],
+      ".read": "auth != null",
+      ".write": false,
+
+      "$supplierId": {
+        ".read": "auth != null",
+        ".write": "auth != null && (auth.uid === $supplierId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+        "medicines": {
+          ".read": "auth != null",
+          ".write": "auth != null && (auth.uid === $supplierId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+          "$medicineId": {
+            ".read": "auth != null",
+            ".write": "auth != null && (auth.uid === $supplierId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+            "stock": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "price": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "expiryDate": {
+              ".validate": "newData.isNumber()"
+            },
+            "mfgDate": {
+              ".validate": "newData.isNumber()"
+            },
+            "approvalStatus": {
+              ".validate": "newData.isString()"
+            }
+          }
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "isActive": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+
+    /* ================= SHOPKEEPERS ================= */
+    "shopkeepers": {
+      ".indexOn": ["isActive"],
+      ".read": "auth != null",
+      ".write": false,
+
+      "$shopkeeperId": {
+        ".read": "auth != null",
+        ".write": "auth != null && (auth.uid === $shopkeeperId || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "shopName": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "isActive": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+
+    /* ================= CUSTOMER ORDERS ================= */
+    "orders": {
+      ".indexOn": ["shopId", "createdAt"],
+      ".read": "auth != null",
+      ".write": "auth != null",
+
+      "$orderId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+
+        "status": {
+          ".validate": "newData.isString()"
+        },
+        "subtotal": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "total": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+
+    /* ================= SUPPLIER ORDERS ================= */
+    "supplierOrders": {
+      ".indexOn": ["supplierId", "timestamp"],
+      ".read": "auth != null",
+      ".write": "auth != null",
+
+      "$orderId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'pending' || newData.val() === 'accepted' || newData.val() === 'rejected')"
+        },
+        "items": {
+          ".validate": "newData.exists()"
+        },
+        "subtotal": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "gst": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "discount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "total": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "acceptedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "invoicePath": {
+          ".validate": "newData.isString()"
+        },
+        "supplierId": {
+          ".validate": "newData.isString()"
+        },
+        "userId": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+
+    /* ================= BILLS ================= */
+    "bills": {
+      ".indexOn": ["shopId", "createdAt"],
+      ".read": "auth != null",
+      ".write": "auth != null",
+
+      "$billId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+
+        "shopId": {
+          ".validate": "newData.isString()"
+        },
+        "customerName": {
+          ".validate": "newData.isString()"
+        },
+        "customerMobile": {
+          ".validate": "newData.isString()"
+        },
+        "subtotal": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "totalAmount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "discountPercent": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "gstPercent": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "items": {
+          ".validate": "newData.exists()"
+        }
+      }
+    },
+
+    /* ================= MEDICINES (global catalog) ================= */
+    "medicines": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["approvalStatus"]
+    },
+
+    /* ================= REORDERS ================= */
+    "reorders": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["status", "shopId"]
+    },
+
+    /* ================= SUPPLIER MEDICINES PENDING ================= */
+    "supplierMedicinesPending": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["supplierId", "approvalStatus"]
+    },
+
+    /* ================= APPROVED MEDICINES ================= */
+    "approvedMedicines": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["supplierId"]
+    },
+
+    /* ================= AUDIT LOGS ================= */
+    "auditLogs": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["userId", "timestamp"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+[build]
+  publish   = "."       # if you later add a build step and use a `dist` folder, change this to "dist"
+  functions = "functions"
+
+[functions]
+  node_bundler = "esbuild"  # default bundler for Netlify Functions
+
+[dev]
+  command = "npm run serve"   # optional for local `netlify dev`
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"

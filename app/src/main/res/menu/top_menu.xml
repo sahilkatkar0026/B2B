@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_history"
+        android:title="Customer History"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Logout"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/nav_order"
+        android:title="Order"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/nav_purchased"
+        android:title="Purchased"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical B2B Admin | Admin Login</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .hero-section {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        color: white;
+        padding: 3rem 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      
+      .hero-section h1 {
+        margin: 0.5rem 0;
+        font-size: 2rem;
+      }
+      
+      .hero-section p {
+        margin: 0;
+        font-size: 1.1rem;
+        opacity: 0.95;
+      }
+    </style>
+  </head>
+  <body class="auth-body">
+    <div class="hero-section">
+      <h1>Medical B2B Admin Portal</h1>
+      <p>Admin Access Only</p>
+    </div>
+
+    <div class="auth-wrapper">
+      <div class="auth-card">
+        <div class="auth-brand">
+          <div class="brand-logo">MB</div>
+          <div>
+            <h1 class="brand-title">Admin Login</h1>
+            <p class="brand-subtitle">Medical B2B Administration</p>
+          </div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="input"
+              placeholder="admin@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="input"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Sign In
+          </button>
+
+          <p id="loginError" class="form-error" aria-live="polite"></p>
+        </form>
+
+        <p class="auth-footer-text">
+          🔒 Admin Portal - Authorized Personnel Only
+        </p>
+      </div>
+    </div>
+
+    <!-- Firebase Authentication Module -->
+    <script type="module" src="js/auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+        <!-- Primary calming teal-green (trustworthy for medical/pharmacy) -->
+        <color name="primary_pharmacy">#00796B</color> <!-- Teal 700 -->
+        <color name="primary_variant">#004D40</color> <!-- Darker variant for accents -->
+
+        <!-- Secondary accent (soft blue for highlights) -->
+        <color name="secondary_pharmacy">#29B6F6</color> <!-- Light Blue 500 -->
+
+        <!-- Backgrounds -->
+        <color name="background">#F8FFFD</color> <!-- Very light mint tint -->
+        <color name="surface">#FFFFFF</color> <!-- White for cards -->
+
+        <!-- Text and icons -->
+        <color name="on_primary">#FFFFFF</color> <!-- White text on primary -->
+        <color name="on_surface">#212121</color> <!-- Dark gray text -->
+        <color name="on_background">#424242</color>
+    <!-- Primary Colors -->
+    <color name="primary_color">#1B4B5C</color>
+    <color name="primary_dark">#0F3240</color>
+    <color name="accent_color">#27AE60</color>
+
+    <!-- Background Colors -->
+    <color name="background_gray">#F5F7FA</color>
+    <color name="card_background">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1B4B5C</color>
+    <color name="text_secondary">#7F8C8D</color>
+    <color name="text_light">#95A5A6</color>
+
+    <!-- Status Colors -->
+    <color name="status_pending">#F39C12</color>
+    <color name="status_accepted">#27AE60</color>
+    <color name="status_rejected">#E74C3C</color>
+    <color name="status_completed">#3498DB</color>
+
+    <!-- Button Colors -->
+    <color name="accept_color">#27AE60</color>
+    <color name="accept_color_dark">#229954</color>
+    <color name="reject_color">#E74C3C</color>
+    <color name="reject_color_light">#FADBD8</color>
+        <!-- Error and others -->
+
+    <color name="primary_medical_blue">#1976D2</color>
+    <color name="primary_medical_blue_dark">#0D47A1</color>
+    <color name="primary_medical_blue_light">#42A5F5</color>
+
+    <!-- Accent Colors - Medical Teal -->
+    <color name="accent_medical_teal">#00897B</color>
+    <color name="accent_medical_teal_light">#4DB6AC</color>
+
+    <!-- Background Colors -->
+    <color name="background_main">#F8FAFC</color>
+    <color name="background_card">#FFFFFF</color>
+
+    <!-- Text Colors -->
+
+    <color name="text_hint">#90A4AE</color>
+
+    <!-- Input Field Colors -->
+    <color name="input_border">#E0E0E0</color>
+    <color name="input_border_focused">#1976D2</color>
+
+    <!-- Divider Color -->
+    <color name="divider_light">#ECEFF1</color>
+
+    <!-- Status Colors -->
+    <color name="success_green">#43A047</color>
+    <color name="error_red">#E53935</color>
+    <color name="warning_orange">#FB8C00</color>
+
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#1976D2</color>
+    <color name="gradient_end">#42A5F5</color>
+    <!-- Primary Colors -->
+
+    <color name="accent">#10B981</color>
+
+    <!-- Background Colors -->
+
+    <color name="background_light">#FFFFFF</color>
+    <color name="background_surface">#F1F5F9</color>
+
+    <!-- Text Colors -->
+
+    <color name="divider_dark">#CBD5E1</color>
+
+    <!-- Bottom Navigation Colors -->
+    <color name="bottom_nav_text">@drawable/bottom_nav_text</color>
+    <color name="bottom_nav_icon">@drawable/bottom_nav_icon</color>
+
+    <!-- Status Colors -->
+    <color name="success">#10B981</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#EF4444</color>
+</resources>

@@ -1,0 +1,21 @@
+{
+  "name": "medical-b2b-admin",
+  "version": "1.0.0",
+  "description": "Medical B2B Admin Panel with Email Notifications",
+  "main": "server.js",
+  "scripts": {
+    "serve": "npx serve -l 8080",
+    "start": "node server.js",
+    "dev": "npx serve -l 8080",
+    "server": "node server.js",
+    "install-dependencies": "npm install express cors dotenv nodemailer nodemailer-sendgrid-transport"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "nodemailer": "^6.9.1",
+    "nodemailer-sendgrid-transport": "^0.0.2"
+  },
+  "keywords": ["medical", "b2b", "admin", "panel", "firebase"]
+}

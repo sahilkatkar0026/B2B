@@ -1,0 +1,5 @@
+<!-- res/drawable/cart_btn_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#1B4B5C"/>
+    <corners android:radius="8dp"/>
+</shape>

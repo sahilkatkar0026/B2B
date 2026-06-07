@@ -1,0 +1,71 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        // Users can read their own profile
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        // Users can only write to their own profile (registration only)
+        ".write": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        // Admin can update approval status
+        "registrationStatus": {
+          ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        },
+        // User profile fields
+        "uid": { ".validate": "newData.isString()" },
+        "name": { ".validate": "newData.isString()" },
+        "email": { ".validate": "newData.isString()" },
+        "role": { ".validate": "newData.val() === 'admin' || newData.val() === 'supplier' || newData.val() === 'shopkeeper'" },
+        "registrationStatus": { ".validate": "newData.val() === 'pending' || newData.val() === 'approved' || newData.val() === 'rejected'" },
+        "licenseImageBase64": { ".validate": "newData.isString()" },
+        "createdAt": { ".validate": "newData.isNumber()" }
+      }
+    },
+    "suppliers": {
+      "$uid": {
+        // Suppliers can read their own data, admin can read all
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        // Only admin can write
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    },
+    "shopkeepers": {
+      "$uid": {
+        // Shopkeepers can read their own data, admin can read all
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        // Only admin can write
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    },
+    "shops": {
+      // Allow authenticated users to read all shops (filtered in app)
+      ".read": "auth !== null",
+      "$shopId": {
+        // Shopkeepers can read/write their own shop
+        ".read": "$shopId === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".write": "$shopId === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        "medicines": {
+          ".read": true,
+          ".write": "$shopId === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "reorders": {
+          ".read": true,
+          ".write": "$shopId === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        }
+      }
+    },
+    "medicines": {
+      "$uid": {
+        // Everyone can read, suppliers/admin can write
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'supplier' || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    },
+    "bills": {
+      "$uid": {
+        // Shopkeepers can write their bills, suppliers and admin can read
+        ".read": "root.child('users').child(auth.uid).child('role').val() === 'supplier' || root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('bills').child($uid).child('shopId').val() === auth.uid",
+        ".write": "root.child('bills').child($uid).child('shopId').val() === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    }
+  }
+}
